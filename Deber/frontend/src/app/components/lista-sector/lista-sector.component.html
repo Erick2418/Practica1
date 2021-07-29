@@ -1,0 +1,27 @@
+
+<div class="row mt-3" style="margin-right: 1rem;">
+    <div class="col lg-6">
+        <button class="btn btn-primary float-end" routerLink="/registrar" >Registrar persona</button>
+    </div>
+</div>
+<div style="width: 50%;">
+    <table  class="table table-hover mt-4">
+        <thead>
+            <tr>
+                <td>Sector</td>
+                <td>Zona</td>
+                <td>Sueldo</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let sector of listPersonas"   (click)="cambiarNombre(sector.sector,sector.zona)"> 
+                <td>{{sector.sector}}</td>
+                <td>{{sector.zona}}</td>
+                <td>{{sector.sueldo}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<app-lista-personas [zona]="zonaSelect" [sector]="sectorSelect" ></app-lista-personas>
+<!-- EL NOMBRE sonaSleext tiene que estar declarado en el ts -->
