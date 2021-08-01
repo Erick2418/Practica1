@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { ListaPersonaService } from 'src/app/services/lista-persona.service';
 import { ListaPersona } from '../../interfaces/ListaPersona';
 
 @Component({
@@ -8,22 +9,36 @@ import { ListaPersona } from '../../interfaces/ListaPersona';
 })
 export class ListaPersonasComponent implements OnInit {
   // @Input() sectorReci:string = 'sin sector';
-    @Input() zona:string = 'sin zona';
-    @Input() sector:string = 'con zona'; // con estos 2 datos haces consulta a la base de datos!
+    @Input() zona:number = 0;
+    @Input() sector:number = 0; // con estos 2 datos haces consulta a la base de datos!
+
+    
+
+  listPersonas: ListaPersona[]=[]
+ 
 
 
-
-  listPersonas: ListaPersona[]=[
-    { codigo:"001",nombre: 'Erick', sueldo:1500,fechaNacimiento: new Date,sector:'norte',zona:'fortin'},
-    { codigo:"002",nombre: 'Fernando', sueldo:2500,fechaNacimiento: new Date,sector:'norte',zona:'mapasingue'}
-  ]
-
-
-
-  constructor() { }
+  constructor(private _personaService: ListaPersonaService) { }
 
   ngOnInit(): void {
+    this.getPersonas();
+  }
+  ngOnChanges(changes: SimpleChanges) {
+    this.getPersonas();
+    console.log(changes);
+  }
+  getPersonas(){
+    this._personaService.getListPersonas().subscribe(
+      data =>{
+        this.listPersonas=data;
+        const FiltroEdad =  this.listPersonas.filter(persona =>{ 
+          return (this.zona==persona.id_zona && this.sector==persona.id_sector)? true:false;
+        });
+        this.listPersonas=FiltroEdad;
+      },error=>{console.log(error)});
 
   }
 
+  
+  
 }

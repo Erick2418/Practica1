@@ -21,8 +21,9 @@ export class RegistrarComponent implements OnInit {
       zonaPersona:['',Validators.required],
     });
   }
-  
+   
   ngOnInit(): void {
+    
   }
 
   // valorcapturado(){
@@ -31,17 +32,17 @@ export class RegistrarComponent implements OnInit {
   //     console.log(this.algo);
   // }
   agregar(){
-    console.log(this.agregarPersona);
-    const comentario: ListaPersona={
-      // id?: number,
-      codigo: this.agregarPersona.get('codigoPersona')?.value,
-      nombre:  this.agregarPersona.get('nombrePersona')?.value,
-      sueldo: 123312,
-      fechaNacimiento: new Date,
-      sector:  this.agregarPersona.get('sectorPersona')?.value,
-      zona: this.agregarPersona.get('zonaPersona')?.value,
-    }
-    console.log(comentario);
+    // console.log(this.agregarPersona);
+    // const comentario: ListaPersona={
+    //   // id?: number,
+    //   codigo: this.agregarPersona.get('codigoPersona')?.value,
+    //   nombre:  this.agregarPersona.get('nombrePersona')?.value,
+    //   sueldo: 123312,
+    //   fechaNacimiento: new Date,
+    //   sector:  this.agregarPersona.get('sectorPersona')?.value,
+    //   zona: this.agregarPersona.get('zonaPersona')?.value,
+    // }
+    // console.log(comentario);
 
 
   }

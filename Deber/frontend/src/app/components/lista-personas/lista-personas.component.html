@@ -1,9 +1,4 @@
-<hr>
-<h3>Datos Recibidos</h3>
-<h4>zona:{{zona}}</h4>
-<h4>sector:{{sector}}</h4>
-
-<div style="width: 50%;">
+<div style="width: 30%;">
     <table  class="table table-hover mt-4">
         <thead>
             <tr>
@@ -13,10 +8,13 @@
             </tr>
         </thead>
         <tbody>
+            <div class="row mt-5" *ngIf="listPersonas.length==0" >
+                <h5>Seleccione una Zona</h5>
+            </div>
             <tr *ngFor="let persona of listPersonas"  > 
                 <!-- ESE FOR DE ARRIBA LLAMA A LA LISTA CREEADA EN EL TS -->
-                <td>{{persona.codigo}}</td>
-                <td>{{persona.nombre}}</td>
+                <td>{{persona.id_persona}}</td>
+                <td>{{persona.nom_persona}}</td>
                 <td>{{persona.sueldo}}</td>
             </tr> 
         </tbody>

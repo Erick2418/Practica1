@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ListaSector } from 'src/app/interfaces/ListaSector';
+import { ListaZona } from 'src/app/interfaces/ListaZona';
+import { ListaListaSectorServiceService } from 'src/app/services/lista-lista-sector-service.service';
+import { ListaListaZonaService } from 'src/app/services/lista-lista-zona.service';
+import { ListaPersonaService } from 'src/app/services/lista-persona.service';
 import { ListaPersona } from '../../interfaces/ListaPersona';
 
 @Component({
@@ -8,32 +13,71 @@ import { ListaPersona } from '../../interfaces/ListaPersona';
 })
 export class ListaSectorComponent implements OnInit {
 
- 
   // sector:string= 'Sector Usuario';
   // zona:string= 'Zona Usuario';
-  zonaSelect: string = "Zona1";
-  sectorSelect: string = "Sector1";
+  fecha_edad:number=0;
+  zonaSelect: number = 0;
+  sectorSelect: number = 0;
   
+  sectorNombre:string="";
 
-  listPersonas: ListaPersona[]=[
-    { codigo:"001",nombre: 'Erick', sueldo:1500,fechaNacimiento: new Date,sector:'norte',zona:'fortin'},
-    { codigo:"003",nombre: 'Joel', sueldo:4500,fechaNacimiento: new Date,sector:'norte',zona:'perimetral'},
-    { codigo:"004",nombre: 'Limon', sueldo:2500,fechaNacimiento: new Date,sector:'norte',zona:'mapasingue'},
-    { codigo:"004",nombre: 'Limon', sueldo:2500,fechaNacimiento: new Date,sector:'sur',zona:'pradera'},
-    { codigo:"004",nombre: 'Limon', sueldo:2500,fechaNacimiento: new Date,sector:'barcelona',zona:'amarillo'},
-    
-  ]
-  constructor() { }
+  listZonas: ListaZona[]=[];
+  listPersonas: ListaPersona[]=[];
+  listSector: ListaSector[]=[];
+  
+  listAgrupadoSZS:[sector: string,zona: string,sueldo: string]=["","",""];
+
+  constructor( private _personaService: ListaPersonaService,private _zonaService: ListaListaZonaService,private _sectorService: ListaListaSectorServiceService) { }
 
   ngOnInit(): void {
+    this.getZonas();
+    this.getSectores();
+    this.getPersonas();
   }
-  
-  cambiarNombre(sector: string,zona: string){
-    // console.log(sector+"-"+zona);
+  getPersonas(){
+    this._personaService.getListPersonas().subscribe(
+      data =>{
+        this.listPersonas=data;
+        const FiltroEdad =  this.listPersonas.filter(persona =>{ 
+          this.ageCalculator(persona.fec_nacimiento);
+          return this.fecha_edad<65? true: false;
+        });
+        this.listPersonas=FiltroEdad;
+      },error=>{console.log(error)});
+            
+  }
+
+  cambiarNombre(sector: number,zona: number){
+    
     this.zonaSelect=zona;
     this.sectorSelect=sector;
 
   }
 
 
+   getZonas(){
+    this._zonaService.getListZona().subscribe(
+      data =>{
+        this.listZonas=data;
+        
+      },error=>{console.log(error)});
+   
+  }
+  
+  getSectores(){
+    this._sectorService.getListSector().subscribe(
+      data =>{
+        this.listSector=data;
+       
+       
+      },error=>{console.log(error)});
+  }
+
+  ageCalculator(age:Date){
+    if(age){
+      const convertAge = new Date(age);
+      const timeDiff = Math.abs(Date.now() - convertAge.getTime());
+      this.fecha_edad = Math.floor((timeDiff / (1000 * 3600 * 24))/365);
+    }
+  }
 }
