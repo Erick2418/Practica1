@@ -7,17 +7,23 @@
                 <td>Sueldo</td>
             </tr>
         </thead>
+        <div class="row mt-2"  *ngIf="listPersonas.length==0" >
+            <p>Seleccione una Zona </p>
+        </div>
         <tbody>
-            <div class="row mt-5" *ngIf="listPersonas.length==0" >
-                <h5>Seleccione una Zona</h5>
-            </div>
             <tr *ngFor="let persona of listPersonas"  > 
                 <!-- ESE FOR DE ARRIBA LLAMA A LA LISTA CREEADA EN EL TS -->
                 <td>{{persona.id_persona}}</td>
                 <td>{{persona.nom_persona}}</td>
                 <td>{{persona.sueldo}}</td>
+                <td>
+                    <button [routerLink]="['/registrar',persona.id_persona]" class="btn btn-primary btn-sm float-end">Editar</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-sm float-end" (click)="deletePersona(persona.id_persona)">Eliminar</button>
+                </td>
+                
             </tr> 
         </tbody>
     </table>
 </div>
-

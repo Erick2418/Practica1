@@ -1,50 +1,50 @@
 <h3 class="mt-3"></h3>
-<!-- <form [formGroup]="agregarComentario" (ngSubmit)="agregar()" > -->
-<div class="container mt-5" style="width: 30%;">
-    <form  [formGroup]="agregarPersona" (ngSubmit)="agregar()" >
 
+<div class="container mt-5" style="width: 50%;">
+    <form  [formGroup]="agregarPersona" (ngSubmit)="agregarEditarComentario()" >
         <div class="mb-3">
-            <label for="codigoPersona" class="form-label">Ingrese un Codigo</label>
-            <input formControlName="codigoPersona" type="text" class="form-control" id="codigoPersona" autocomplete="off">
-            <span *ngIf="agregarPersona.get('codigoPersona')?.invalid && agregarPersona.get('codigoPersona')?.touched"  class="text-danger">
-                El <strong>codigoPersona</strong> es requerido
-            </span>
-        </div>
-        <div class="mb-3">
-            <label for="nombrePersona" class="form-label">Ingrese un Nombre</label>
+
+            <label for="nombrePersona" class="form-label">{{accion}} un Nombre</label>
+
             <input formControlName="nombrePersona" type="text" class="form-control" id="nombrePersona" autocomplete="off">
             <span *ngIf="agregarPersona.get('nombrePersona')?.invalid && agregarPersona.get('nombrePersona')?.touched"  class="text-danger">
-                El <strong>codigoPersona</strong> es requerido
+                El <strong>nombre de la persona</strong> es requerido
             </span>
         </div>
-
         <div class="mb-3">
-            <div class="mb-3">
+            <label for="sueldoPersona" class="form-label">{{accion}} Sueldo</label>
+            <input formControlName="sueldoPersona" type="number" class="form-control" id="sueldoPersona" autocomplete="off">
+            <span *ngIf="agregarPersona.get('sueldoPersona')?.invalid && agregarPersona.get('sueldoPersona')?.touched"  class="text-danger">
+                El <strong>sueldo de la persona</strong> es requerido
+            </span>
+        </div>
+        <div class="mb-3">
+            <div class="mb-3" >
                 <label for="sectorPersona" class="form-label" style="margin-right: 1rem;">Seleccione un Sector</label>
-                <select id="sectorPersona" class="form-select"  formControlName="sectorPersona" id="sectorPersona">
-                    <option>Norte</option>
-                    <option>Sur</option>
+                <select id="sectorPersona" class="form-select"   formControlName="sectorPersona"  (click)="getZonasFiltraadas()" >
+                    <option value="" selected disabled hidden > -- </option>
+                    <option  *ngFor="let sector of listSector" value={{sector.id_sector}}>
+                           {{sector.desc_sector}}
+                    </option>
                 </select>
             </div>
         </div>
         <div class="mb-3">
             <div class="mb-3">
                 <label for="zonaPersona" class="form-label" style="margin-right: 1rem;">Seleccione un Zona</label>
-                <select id="zonaPersona" class="form-select"  formControlName="zonaPersona" id="zonaPersona">
-                    <option>Mapasingue</option>
-                    <option>Duran</option>
-                    <option>Perimetral</option>
-                    <option>Florida</option>
-                    
+                <select id="zonaPersona" class="form-select"  formControlName="zonaPersona" >
+                    <option value="" selected disabled hidden>--</option>
+                    <option *ngFor="let zona of listZonasFiltradas " value={{zona.id_zona}}>
+                        <div *ngIf="agregarPersona.get('sectorPersona')?.value==zona.id_sector">
+                             {{zona.desc_zona}}
+                        </div>
+                    </option>
                 </select>
             </div>
         </div>      
-        
-        <button type="button" routerLink="/" class="btn btn-secondary" style="margin-right: 1rem;">Volver</button>
-        <button type="button" class="btn btn-primary" style="margin-right: 1rem;">Nuevo</button>
-        <button type="button" class="btn btn-danger" style="margin-right: 1rem;">Eliminar</button>
-        <button type="submit" [disabled]="agregarPersona?.invalid" class="btn btn-primary">Grabar</button>
-
+        <button type="button" routerLink="/" class="btn btn-info mt-3" style="margin-right: 2rem;">Volver</button>
+        <button type="button" class="btn btn-primary mt-3" style="margin-right: 2rem;" (click)="clear()">Limpiar </button>
+        <button type="submit" [disabled]="agregarPersona?.invalid" class="btn btn-success mt-3">Grabar</button>
     </form>
 </div>
 

@@ -6,6 +6,7 @@ import { RegistrarComponent } from './components/registrar/registrar.component';
 const routes: Routes = [
   {path:'home',component:HomeComponent},
   {path:'registrar',component:RegistrarComponent},
+  {path:'registrar/:id',component:RegistrarComponent},
   {path:'**',pathMatch:'full',redirectTo:'home'},  
 ];
 

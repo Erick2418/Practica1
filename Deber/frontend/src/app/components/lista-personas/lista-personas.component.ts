@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
 import { ListaPersonaService } from 'src/app/services/lista-persona.service';
+import Swal from 'sweetalert2';
 import { ListaPersona } from '../../interfaces/ListaPersona';
 
 @Component({
@@ -18,14 +20,14 @@ export class ListaPersonasComponent implements OnInit {
  
 
 
-  constructor(private _personaService: ListaPersonaService) { }
+  constructor(private _personaService: ListaPersonaService, private router: Router) { }
 
   ngOnInit(): void {
     this.getPersonas();
   }
   ngOnChanges(changes: SimpleChanges) {
     this.getPersonas();
-    console.log(changes);
+   
   }
   getPersonas(){
     this._personaService.getListPersonas().subscribe(
@@ -38,7 +40,21 @@ export class ListaPersonasComponent implements OnInit {
       },error=>{console.log(error)});
 
   }
+  deletePersona(id: any){
+    console.log(id);
+    this._personaService.deletePersona(id).subscribe(
+      data =>{
+        Swal.fire({
+          title: 'Eliminado con exito',
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        })
+        this.getPersonas();
+        
+               
+      },error=>{console.log(error)});
 
+  }
   
   
 }

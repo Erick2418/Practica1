@@ -25,7 +25,6 @@ export class ListaSectorComponent implements OnInit {
   listPersonas: ListaPersona[]=[];
   listSector: ListaSector[]=[];
   
-  listAgrupadoSZS:[sector: string,zona: string,sueldo: string]=["","",""];
 
   constructor( private _personaService: ListaPersonaService,private _zonaService: ListaListaZonaService,private _sectorService: ListaListaSectorServiceService) { }
 

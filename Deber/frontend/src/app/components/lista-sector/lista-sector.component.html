@@ -12,6 +12,9 @@
                 <td>Sueldo</td>
             </tr>
         </thead>
+        <div class="row mt-2" style="margin-left: 1rem;" *ngIf="listPersonas.length==0" >
+            <p>Cargando datos...</p>
+        </div>
         <tbody>
             <tr *ngFor="let persona of listPersonas"  (click)="cambiarNombre(persona.id_sector,persona.id_zona)"> 
                 <td>
